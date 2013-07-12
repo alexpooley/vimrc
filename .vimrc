@@ -1,4 +1,5 @@
 " Setup pathogen
+filetype on
 filetype off
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
@@ -28,13 +29,6 @@ if has('gui_running')
   map <S-Insert> <MiddleMouse>
   map! <S-Insert> <MiddleMouse>
 endif
-
-syntax enable
-
-"set t_Co=256 " 256 colors
-color vividchalk
-
-" Copied from somewhere else
 
 " Formatting (some of these are for coding in C and C++)
 set ts=2 "  Tabs are 2 spaces
@@ -69,3 +63,41 @@ set pastetoggle=<F2>
 nnoremap ; :
 nmap <silent> ,/ :nohlsearch<CR>
 nmap <silent> ,,t :CommandTFlush<CR>
+
+" vim-powerline
+set nocompatible " Disable vi-compatibility
+set laststatus=2 " Always show the statusline
+set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
+
+" command-t
+"set wildignore+=.git
+
+" taglist
+let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+let Tlist_WinWidth = 50
+map <F4> :TlistToggle<cr>
+
+" Nerd Commenter
+filetype plugin on
+
+
+syntax enable
+
+"set t_Co=256 " 256 colors
+"color vividchalk
+" http://stackoverflow.com/questions/8640276/highlight-line-in-vim-but-not-underlying
+" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+set cursorline
+hi CursorLine ctermbg=233 cterm=none
+
+"VimClojure
+let vimclojure#WantNailgun = 0
+let vimclojure#ParenRainbow = 1
+let g:slime_target = "tmux"
+let g:slime_paste_file = "$HOME/.slime_paste"
+
+au BufRead,BufNewFile *.afl set filetype=amibroker
+au! Syntax amibroker source $HOME/.vim/syntax/amibroker.vim
+
+set fileformat=unix
+

@@ -34,12 +34,6 @@
 [submodule "bundle/vim-coffee-script"]
 	path = bundle/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
-[submodule "bundle/vim-clojure"]
-	path = bundle/vim-clojure
-	url = git://github.com/vim-scripts/VimClojure.git
-[submodule "bundle/vim-slime"]
-	path = bundle/vim-slime
-	url = git://github.com/jpalardy/vim-slime.git
 [submodule "bundle/php"]
 	path = bundle/php
 	url = https://github.com/vim-scripts/php.vim--Garvin.git

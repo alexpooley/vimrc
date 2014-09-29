@@ -101,3 +101,17 @@ au! Syntax amibroker source $HOME/.vim/syntax/amibroker.vim
 
 set fileformat=unix
 
+set nowrap
+set linebreak
+
+"http://vim.wikia.com/wiki/Folding
+set foldmethod=indent
+"http://vim.wikia.com/wiki/All_folds_open_when_opening_a_file
+set foldlevelstart=20
+
+"https://github.com/junegunn/limelight.vim
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+"https://github.com/junegunn/seoul256.vim
+let g:seoul256_background = 233
+color seoul256

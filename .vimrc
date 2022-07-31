@@ -1,117 +1,177 @@
-" Setup pathogen
-filetype on
-filetype off
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
-filetype plugin indent on
-
-" Normally we use vim-extensions. If you want true vi-compatibility
-" remove change the following statements
-set nocompatible                " Use Vim defaults instead of 100% vi compatibility
-set backspace=indent,eol,start  " more powerful backspacing
-
-" Now we set some defaults for the editor
-set history=500                " keep 50 lines of command line history
-set ruler                       " show the cursor position all the time
-set number			" show line numbers
-set showcmd
-set incsearch
-set hlsearch
-
-let mapleader=","
-
-" Suffixes that get lower priority when doing tab completion for filenames.
-" These are files we are not likely to want to edit or read.
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
-
-if has('gui_running')
-  " Make shift-insert work like in Xterm
-  map <S-Insert> <MiddleMouse>
-  map! <S-Insert> <MiddleMouse>
+" Install vim-plug
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Formatting (some of these are for coding in C and C++)
-set ts=2 "  Tabs are 2 spaces
-set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
-set nocp incsearch
-set cinoptions=:0,p0,t0
-set cinwords=if,else,while,do,for,switch,case
-set formatoptions=tcqr
-set cindent
-set autoindent
-set smarttab
-set expandtab
-" Visual
-set showmatch  " Show matching brackets.
-set mat=5  " Bracket blinking.
-" Show $ at end of line and trailing space as ~
-set novisualbell  " No blinking .
-set noerrorbells  " No noise.
-set laststatus=2  " Always show status line.
-" gvim specific
-set mousehide  " Hide mouse after chars typed
-set mouse=a  " Mouse in all modes
+" Install plugins
+" :PlugInstall
+" :PlugUpdate
+call plug#begin()
 
-"autocmd VimEnter * NERDTree
-"autocmd VimEnter * wincmd p
+""" Utilies """
+Plug 'wsdjeg/vim-fetch'
+" Adjust 'shiftwidth' and 'expandtab' based on current file.
+Plug 'tpope/vim-sleuth'
+" :Remove, :Move, etc
+Plug 'tpope/vim-eunuch'
+" Fuzzy find
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Snippets
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-"http://nvie.com/posts/how-i-boosted-my-vim/
-set nobackup
+""" Vim presentation """
+" Status line
+Plug 'vim-airline/vim-airline'
+" Color schemes
+Plug 'https://github.com/nanotech/jellybeans.vim'
+Plug 'https://github.com/aonemd/kuroi.vim'
+
+""" General programming """
+" Parentheses handling. cs'" etc
+Plug 'tpope/vim-surround'
+" Comment handling, gcc.
+Plug 'tpope/vim-commentary'
+" Match language specific words like begin -> end.
+Plug 'andymass/vim-matchup'
+" Tags
+
+""" Program integration """
+" Git
+Plug 'tpope/vim-fugitive'
+" Ruby
+Plug 'vim-ruby/vim-ruby'
+" Rails
+Plug 'tpope/vim-rails'
+" Rspec
+Plug 'thoughtbot/vim-rspec'
+Plug 'rlue/vim-fold-rspec'
+" Vue
+Plug 'posva/vim-vue'
+
+call plug#end()
+
+
+
 set noswapfile
-set pastetoggle=<F2>
-nnoremap ; :
-nmap <silent> ,/ :nohlsearch<CR>
-nmap <silent> ,,t :CommandTFlush<CR>
-
-" vim-powerline
-set nocompatible " Disable vi-compatibility
-set laststatus=2 " Always show the statusline
-set t_Co=256 " Explicitly tell vim that the terminal has 256 colors
-
-" command-t
-"set wildignore+=.git
-
-" taglist
-let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
-let Tlist_WinWidth = 50
-map <F4> :TlistToggle<cr>
-
-" Nerd Commenter
-filetype plugin on
-
+set shiftwidth=2 tabstop=2 softtabstop=2 expandtab smarttab
+set novisualbell
+set noerrorbells
+set number
+set ruler
+set nowrap
 
 syntax enable
+"set background=dark
+"let g:solarized_termcolors=256
+"colorscheme solarized
+colorscheme jellybeans
+"colorscheme vividchalk
+" https://github.com/jonathanfilip/vim-lucius/blob/master/colors/lucius.vim
+"colorscheme lucius
+"LuciusBlack
 
-"set t_Co=256 " 256 colors
-"color vividchalk
-" http://stackoverflow.com/questions/8640276/highlight-line-in-vim-but-not-underlying
-" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
-set cursorline
-hi CursorLine ctermbg=233 cterm=none
+nnoremap ; :
+let mapleader=","
 
-"VimClojure
-let vimclojure#WantNailgun = 0
-let vimclojure#ParenRainbow = 1
-let g:slime_target = "tmux"
-let g:slime_paste_file = "$HOME/.slime_paste"
+set incsearch
+set hlsearch
+" case insensitive when lowercase
+set ignorecase
+set smartcase
+nmap <silent> ,/ :nohlsearch<CR>
 
-au BufRead,BufNewFile *.afl set filetype=amibroker
-au! Syntax amibroker source $HOME/.vim/syntax/amibroker.vim
+" CTRL-P
+" let g:ctrlp_match_window = 'min:4,max:999'
+" let g:ctrlp_max_files = 0
+" let g:ctrlp_custom_ignore = '\vvendor|tmp|app/assets/images|build|node_modules|public/packs*|public/assets$'
 
-set fileformat=unix
+" fzf
+map <C-p> :Files<CR>
+" map <C-s> :Snippets<CR>
 
-set nowrap
-set linebreak
+" ultisnips
+set runtimepath+=~/.vim/plugged/UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-"http://vim.wikia.com/wiki/Folding
-set foldmethod=indent
-"http://vim.wikia.com/wiki/All_folds_open_when_opening_a_file
-set foldlevelstart=20
+" vim-rspec
+" https://github.com/thoughtbot/vim-rspec
+let g:rspec_runner = "os_x_iterm"
+let g:rspec_command = "!bundle exec rspec {spec}"
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 
-"https://github.com/junegunn/limelight.vim
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-"https://github.com/junegunn/seoul256.vim
-let g:seoul256_background = 233
-color seoul256
+" vim-ruby
+"
+let ruby_fold = 1
+" let ruby_foldable_groups = 'if case %'
+" Auto open all folds on buffer read.
+au BufRead * normal zR
+
+" rails-vim
+"
+" GitLab EE
+let g:rails_projections = {
+        \ "ee/app/models/ee/*.rb": {
+        \   "test": [
+        \     "ee/spec/models/ee/{}_spec.rb",
+        \     "ee/spec/models/{}_spec.rb",
+        \   ],
+        \ },
+        \ "ee/app/models/*.rb": {
+        \   "test": [
+        \     "ee/spec/models/{}_spec.rb",
+        \   ],
+        \ },
+        \ "ee/spec/models/ee/*_spec.rb": {
+        \   "alternate": [
+        \     "ee/app/models/ee/{}.rb",
+        \     "ee/app/models/{}.rb",
+        \   ],
+        \ },
+        \ "ee/spec/models/*_spec.rb": {
+        \   "alternate": [
+        \     "ee/app/models/ee/{}.rb",
+        \     "ee/app/models/{}.rb",
+        \   ]
+        \ },
+        \ "ee/lib/ee/*.rb": {
+        \   "test": [
+        \     "ee/lib/ee/{}_spec.rb",
+        \   ],
+        \ },
+        \ "ee/lib/*.rb": {
+        \   "test": [
+        \     "ee/lib/{}_spec.rb",
+        \   ],
+        \ },
+        \ "ee/*": { "type": "ee" },
+        \ "app/models/*.rb": {
+        \   "alternate": "spec/models/{}_spec.rb",
+        \   "related": "ee/app/models/ee/{}.rb",
+        \   "type": "source"
+        \ }}
+
+"Toggle line numbers
+nmap \l :setlocal number!<CR>
+"Paste mode
+nmap \o :set paste!<CR>
+"Move up/down wrapped lines
+nmap j gj
+nmap k gk
+
+set tags=tags
+
+"configure set colorcolumn=72 when using vim for git commit
+autocmd Filetype gitcommit setlocal colorcolumn=72
+
+" Load project local config
+" https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/Project-local-settings
+set exrc

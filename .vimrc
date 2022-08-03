@@ -20,6 +20,7 @@ Plug 'tpope/vim-eunuch'
 " Fuzzy find
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'zackhsi/fzf-tags'
 " Snippets
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
@@ -29,6 +30,8 @@ Plug 'vim-airline/vim-airline'
 " Color schemes
 Plug 'https://github.com/nanotech/jellybeans.vim'
 Plug 'https://github.com/aonemd/kuroi.vim'
+" Distraction free writing
+Plug 'junegunn/goyo.vim'
 
 """ General programming """
 " Parentheses handling. cs'" etc
@@ -37,7 +40,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 " Match language specific words like begin -> end.
 Plug 'andymass/vim-matchup'
-" Tags
 
 """ Program integration """
 " Git
@@ -92,6 +94,12 @@ nmap <silent> ,/ :nohlsearch<CR>
 " fzf
 map <C-p> :Files<CR>
 " map <C-s> :Snippets<CR>
+" Search for references to current word.
+nmap <C-[> :call fzf#vim#ag(expand('<cword>'))<kEnter>
+
+" fzf-tags
+" To override the default jump-to-tag binding:
+nmap <C-]> <Plug>(fzf_tags)
 
 " ultisnips
 set runtimepath+=~/.vim/plugged/UltiSnips

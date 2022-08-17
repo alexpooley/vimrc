@@ -45,7 +45,8 @@ Plug 'andymass/vim-matchup'
 " Git
 Plug 'tpope/vim-fugitive'
 " Ruby
-Plug 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
+Plug 'jlcrochet/vim-ruby'
 " Rails
 Plug 'tpope/vim-rails'
 " Rspec
@@ -122,6 +123,13 @@ let ruby_fold = 1
 " let ruby_foldable_groups = 'if case %'
 " Auto open all folds on buffer read.
 au BufRead * normal zR
+" Fix slow render on large ruby files.
+" https://stackoverflow.com/a/38616348
+augroup ft_rb
+    au!
+    " fix the SLOOOW syntax highlighting
+    au FileType ruby setlocal re=1 foldmethod=manual
+augroup END
 
 " rails-vim
 "
@@ -179,6 +187,10 @@ set tags=tags
 
 "configure set colorcolumn=72 when using vim for git commit
 autocmd Filetype gitcommit setlocal colorcolumn=72
+
+" Performance improvements?
+set ttyfast
+set lazyredraw
 
 " Load project local config
 " https://github-wiki-see.page/m/neovim/nvim-lspconfig/wiki/Project-local-settings

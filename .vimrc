@@ -28,8 +28,8 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Status line
 Plug 'vim-airline/vim-airline'
 " Color schemes
-Plug 'https://github.com/nanotech/jellybeans.vim'
-Plug 'https://github.com/aonemd/kuroi.vim'
+Plug 'aonemd/kuroi.vim'
+Plug 'nanotech/jellybeans.vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
 
@@ -52,6 +52,8 @@ Plug 'tpope/vim-rails'
 " Rspec
 Plug 'thoughtbot/vim-rspec'
 Plug 'rlue/vim-fold-rspec'
+" Javascript
+Plug 'pangloss/vim-javascript'
 " Vue
 Plug 'posva/vim-vue'
 
@@ -130,6 +132,10 @@ augroup ft_rb
     " fix the SLOOOW syntax highlighting
     au FileType ruby setlocal re=1 foldmethod=manual
 augroup END
+
+" Javascript
+set foldmethod=syntax
+let javaScript_fold=1
 
 " rails-vim
 "

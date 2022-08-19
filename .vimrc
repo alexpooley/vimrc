@@ -40,6 +40,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 " Match language specific words like begin -> end.
 Plug 'andymass/vim-matchup'
+Plug 'Konfekt/FastFold'
 
 """ Program integration """
 " Git
@@ -120,17 +121,22 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
 " vim-ruby
-"
-let ruby_fold = 1
+"let ruby_fold = 1
+" ... using fastfold?
+" let g:ruby_fold = 1
 " let ruby_foldable_groups = 'if case %'
+
 " Auto open all folds on buffer read.
 au BufRead * normal zR
+
 " Fix slow render on large ruby files.
 " https://stackoverflow.com/a/38616348
 augroup ft_rb
     au!
     " fix the SLOOOW syntax highlighting
-    au FileType ruby setlocal re=1 foldmethod=manual
+    "au FileType ruby setlocal re=1 foldmethod=manual
+    " Modified to enable folds. Slightly slower than manual.
+    au FileType ruby setlocal re=1 foldmethod=syntax
 augroup END
 
 " Javascript

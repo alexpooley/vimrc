@@ -22,7 +22,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'zackhsi/fzf-tags'
 " Snippets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 """ Vim presentation """
 " Status line
@@ -41,6 +41,10 @@ Plug 'tpope/vim-commentary'
 " Match language specific words like begin -> end.
 Plug 'andymass/vim-matchup'
 Plug 'Konfekt/FastFold'
+" GitLab
+" Plug 'https://gitlab.com/gitlab-org/editor-extensions/gitlab.vim'
+" GitHub Copilot
+Plug 'github/copilot.vim'
 
 """ Program integration """
 " Git
@@ -90,6 +94,8 @@ set ignorecase
 set smartcase
 nmap <silent> ,/ :nohlsearch<CR>
 
+set cursorline
+
 " CTRL-P
 " let g:ctrlp_match_window = 'min:4,max:999'
 " let g:ctrlp_max_files = 0
@@ -106,10 +112,10 @@ nmap <C-[> :call fzf#vim#ag(expand('<cword>'))<kEnter>
 nmap <C-]> <Plug>(fzf_tags)
 
 " ultisnips
-set runtimepath+=~/.vim/plugged/UltiSnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" set runtimepath+=~/.vim/plugged/UltiSnips
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " vim-rspec
 " https://github.com/thoughtbot/vim-rspec
@@ -199,6 +205,9 @@ set tags=tags
 
 "configure set colorcolumn=72 when using vim for git commit
 autocmd Filetype gitcommit setlocal colorcolumn=72
+
+" Remove trailing whitespace on save.
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Performance improvements?
 set ttyfast

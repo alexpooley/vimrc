@@ -128,26 +128,35 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 " vim-ruby
 "let ruby_fold = 1
-" ... using fastfold?
-" let g:ruby_fold = 1
+" fastfold
+let g:ruby_fold = 1
 " let ruby_foldable_groups = 'if case %'
 
+au FileType ruby setlocal re=1 foldmethod=syntax foldlevel=1 foldclose=all
+
 " Auto open all folds on buffer read.
-au BufRead * normal zR
+" au BufRead * normal zR
 
 " Fix slow render on large ruby files.
 " https://stackoverflow.com/a/38616348
-augroup ft_rb
-    au!
-    " fix the SLOOOW syntax highlighting
-    "au FileType ruby setlocal re=1 foldmethod=manual
-    " Modified to enable folds. Slightly slower than manual.
-    au FileType ruby setlocal re=1 foldmethod=syntax
-augroup END
+" augroup ft_rb
+"     au!
+"     " fix the SLOOOW syntax highlighting
+"     au FileType ruby setlocal re=1 foldmethod=manual
+"     " Modified to enable folds. Slightly slower than manual.
+"     " au FileType ruby setlocal re=1 foldmethod=syntax
+" augroup END
+
+" rlue/vim-fold-rspec
+let g:fold_rspec_foldenable = 1          " disables folding (toggle with `zi`)
+let g:fold_rspec_foldlevel = 1           " sets initial open/closed state of all folds (open unless nested more than two levels deep)
+" let g:fold_rspec_default_foldcolumn = 4  " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
+let g:fold_rspec_foldclose = 'all'       " closes folds automatically when the cursor is moved out of them (only applies to folds deeper than 'foldlevel')
+let g:fold_rspec_foldminlines = 3        " disables closing of folds containing two lines or fewer
 
 " Javascript
-set foldmethod=syntax
-let javaScript_fold=1
+" set foldmethod=syntax
+" let javaScript_fold=1
 
 " rails-vim
 "

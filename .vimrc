@@ -126,13 +126,9 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
-" vim-ruby
-"let ruby_fold = 1
 " fastfold
 let g:ruby_fold = 1
 " let ruby_foldable_groups = 'if case %'
-
-au FileType ruby setlocal re=1 foldmethod=syntax foldlevel=1 foldclose=all
 
 " Auto open all folds on buffer read.
 " au BufRead * normal zR
@@ -153,6 +149,13 @@ let g:fold_rspec_foldlevel = 1           " sets initial open/closed state of all
 " let g:fold_rspec_default_foldcolumn = 4  " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
 let g:fold_rspec_foldclose = 'all'       " closes folds automatically when the cursor is moved out of them (only applies to folds deeper than 'foldlevel')
 let g:fold_rspec_foldminlines = 3        " disables closing of folds containing two lines or fewer
+
+" Fold settings for
+" au BufRead,BufNewFile * if !match(expand('%:t'), '_spec\.rb$') && !match(expand('%:t'), '\.rb$') | setlocal re=1 foldmethod=syntax foldlevel=1 foldclose=all | endif
+au BufRead,BufNewFile *
+    \ if !match(expand('%:t'), '_spec\.rb$') && !match(expand('%:t'), '\.rb$') |
+    \     setlocal re=1 foldmethod=syntax foldlevel=1 foldclose=all |
+    \ endif
 
 " Javascript
 " set foldmethod=syntax
